@@ -12,11 +12,11 @@ const getAllUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const username = req.params?.username;
-    if (!username) return res.status(400).json({ "message": "username is required." });
-    const user = await User.findOne({ username: username }).exec();
+    const id = req.params?.id;
+    if (!id) return res.status(400).json({ "message": "id is required." });
+    const user = await User.findOne({ _id: id }).exec();
     if (!user) {
-      return res.status(204).json({ "message": `No user with ${username} is found.` })
+      return res.status(400).json({ "message": `No user with id: ${id} is found.` })
     }
     res.json(user);
   } catch (err) {
@@ -46,13 +46,13 @@ const createNewUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const username = req.params?.username;
+    const id = req.params?.id;
     const { password, email } = req.body;
     if (!password && !email) return res.status(400).json({ "message": "password or email required." });
 
-    const user = await User.findOne({ username: username }).exec();
+    const user = await User.findOne({ _id: id }).exec();
 
-    if (!user) return res.json(204).json({ "message": `User with ${username} not found.` });
+    if (!user) return res.status(400).json({ "message": `User with ${id} not found.` });
 
     if (req.body?.password) user.password = req.body.password;
     if (req.body?.email) user.email = req.body.email;
@@ -67,12 +67,12 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const username = req.params?.username;
-    if (!username) return res.status(400).json({ "message": "username parameter is requires." })
-    const user = await User.findOne({ username: username }).exec();
-    if (!user) return res.json(204).json({ "message": `User with ${username} not found.` });
+    const id = req.params?.id;
+    if (!id) return res.status(400).json({ "message": "id parameter is requires." })
+    const user = await User.findOne({ _id: id }).exec();
+    if (!user) return res.status(400).json({ "message": `User with ${id} not found.` });
 
-    const deletedUser = await user.deleteOne({ username });
+    const deletedUser = await user.deleteOne({ _id: id });
     res.json(deleteUser);
 
   } catch (err) {

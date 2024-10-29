@@ -3,7 +3,7 @@ import Todo from "../models/todo.js";
 const getAllTodos = async (req, res) => {
   try {
     const todos = await Todo.find({});
-    if (!todos) return res.status(204).json({ "message": "No todos found." });
+    if (!todos) return res.status(400).json({ "message": "No todos found." });
     res.json(todos);
   } catch (err) {
     res.status(500).json({ "message": `${err.message}` });
@@ -13,10 +13,11 @@ const getAllTodos = async (req, res) => {
 const getTodo = async (req, res) => {
   try {
     const id = req.params?.id;
+    console.log(req.params);
     if (!id) return res.status(400).json({ "message": "id is required." });
     const todo = await Todo.findOne({ _id: id }).exec();
     if (!todo) {
-      return res.status(204).json({ "message": `No todo with id: ${id} is found.` })
+      return res.status(400).json({ message: `No todo with id: ${id} is found.` })
     }
     res.json(todo);
   } catch (err) {
@@ -33,7 +34,7 @@ const createNewTodo = async (req, res) => {
     const todo = await Todo.create({
       title,
       description,
-      status,
+      status: status || "pending",
       dueDate,
       priority,
       createdAt: new Date(),
@@ -52,10 +53,9 @@ const updateTodo = async (req, res) => {
     const id = req.params?.id;
     const { title, description, status, dueDate, priority } = req.body;
     if (!id) return res.status(400).json({ "message": "id is required." });
-
     const todo = await Todo.findOne({ _id: id }).exec();
 
-    if (!todo) return res.json(204).json({ "message": `Todo with id: ${id} not found.` });
+    if (!todo) return res.status(400).json({ "message": `Todo with id: ${id} not found.` });
 
     if (title) todo.title = title;
     if (description) todo.description = description;
@@ -77,7 +77,7 @@ const deleteTodo = async (req, res) => {
     const id = req.params?.id;
     if (!id) return res.status(400).json({ "message": "id parameter is requires." })
     const todo = await Todo.findOne({ _id: id }).exec();
-    if (!todo) return res.json(204).json({ "message": `Todo with id: ${id} not found.` });
+    if (!todo) return res.status(400).json({ "message": `Todo with id: ${id} not found.` });
 
     const deletedTodo = await todo.deleteOne({ _id: id });
     res.json(deletedTodo);

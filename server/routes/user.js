@@ -4,9 +4,9 @@ import { createNewUser, deleteUser, getAllUser, getUser, updateUser } from "../c
 const router = Router();
 
 router.get("/", getAllUser);
-router.get("/:username", getUser);
+router.get("/:id", getUser);
 router.post("/", createNewUser);
-router.put("/:username", updateUser);
-router.delete("/:username", deleteUser);
+router.put("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 export default router;

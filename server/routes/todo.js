@@ -4,9 +4,9 @@ import { createNewTodo, deleteTodo, getAllTodos, getTodo, updateTodo } from "../
 const router = Router();
 
 router.get("/", getAllTodos);
-router.get("/:username", getTodo);
+router.get("/:id", getTodo);
 router.post("/", createNewTodo);
-router.put("/:username", updateTodo);
-router.delete("/:username", deleteTodo);
+router.put("/:id", updateTodo);
+router.delete("/:id", deleteTodo);
 
 export default router;
