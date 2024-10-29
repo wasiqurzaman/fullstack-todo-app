@@ -1,0 +1,10 @@
+PUT http://localhost:3000/api/todos/67210929a37531d3ac43f726
+Content-Type: application/json
+
+{
+    "title": "Go for gocery shopping",
+    "description": "Go for grocery shopping tomorrow morning.",
+    "status": "pending",
+    "priority": "urgent",
+    "dueDate": "2024-10-30T15:54:25.316Z"
+}

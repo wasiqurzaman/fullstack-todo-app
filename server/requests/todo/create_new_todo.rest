@@ -1,0 +1,10 @@
+POST http://localhost:3000/api/todos
+Content-Type: application/json
+
+{
+    "title": "Shop for grocery",
+    "description": "Go for grocery shopping tomorrow morning.",
+    "status": "pending",
+    "priority": "urgent",
+    "dueDate": "2024-10-30T15:54:25.316Z"
+}
