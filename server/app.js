@@ -6,6 +6,8 @@ import cors from "cors"
 
 import Todo from "./models/todo.js"
 import UserRoutes from "./routes/user.js";
+import TodoRoutes from "./routes/todo.js";
+
 
 const app = express();
 
@@ -24,42 +26,13 @@ async function connectDB() {
 
 connectDB();
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/api", (req, res) => {
+  res.send("Welcome to the Todo List API!");
 });
-
-// api 
-
-app.get("/api/todos", async (req, res) => {
-  res.send("todos");
-});
-
-app.post("/api/todos", async (req, res) => {
-  try {
-    const { title, description, status, priority } = req.body;
-    const todo = {
-      title,
-      description,
-      status: status || "pending",
-      createdAt: new Date(),
-      priority,
-    }
-
-    const newTodo = new Todo(todo);
-
-    const savedTodo = await newTodo.save();
-    res.json(savedTodo);
-
-  } catch (err) {
-    console.log(res.message);
-    res.status(403).json({ "error": "something went wrong" });
-  }
-
-});
-
 
 // user routes
-
 app.use("/api/users", UserRoutes);
+// todo routes
+app.use("/api/todos", TodoRoutes);
 
 export default app;

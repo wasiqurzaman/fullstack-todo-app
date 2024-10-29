@@ -12,7 +12,7 @@ const getAllUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const username = req.body?.username;
+    const username = req.params?.username;
     if (!username) return res.status(400).json({ "message": "username is required." });
     const user = await User.findOne({ username: username }).exec();
     if (!user) {
