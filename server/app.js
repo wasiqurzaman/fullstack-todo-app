@@ -5,7 +5,7 @@ dotenv.config();
 import cors from "cors"
 
 import Todo from "./models/todo.js"
-
+import UserRoutes from "./routes/user.js";
 
 const app = express();
 
@@ -56,5 +56,10 @@ app.post("/api/todos", async (req, res) => {
   }
 
 });
+
+
+// user routes
+
+app.use("/api/users", UserRoutes);
 
 export default app;
