@@ -9,6 +9,7 @@ import UserRoutes from "./routes/user.js";
 import TodoRoutes from "./routes/todo.js";
 import handleLogin from "./controllers/authController.js";
 import verifyJWT from "./middlewares/verifyJWT.js";
+import requestLogger from "./middlewares/logger.js";
 
 
 const app = express();
@@ -16,6 +17,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(requestLogger);
 
 async function connectDB() {
   try {
