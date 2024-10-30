@@ -7,7 +7,7 @@ const zodUserSchema = z.object({
   email: z.string({ required_error: "Email is required." })
     .email({ message: "Invalid email adress." }),
   password: z.string()
-    .min(8, { message: "Password must be at least 4 characters loong." })
+    .min(8, { message: "Password must be at least 8 characters loong." })
     .max(16, { message: "Password cannot exceed 16 characters." })
 });
 

@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Email is required"],
     unique: true,
-    match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/, "Please enter a valid email address"],
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email address"],
     lowercase: true,
   },
   password: {
@@ -23,6 +23,22 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     deafult: Date.now
+  },
+  todos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Todo"
+    }
+  ],
+  refreshToken: {
+    token: {
+      type: String,
+      deafult: "",
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   }
 });
 

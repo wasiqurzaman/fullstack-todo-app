@@ -1,4 +1,5 @@
 import User from "../models/user.js";
+import bcrypt from "bcrypt";
 
 const getAllUser = async (req, res) => {
   try {
@@ -30,11 +31,18 @@ const createNewUser = async (req, res) => {
     const { username, email, password } = req?.body;
     if (!username || !email || !password) return res.status(400).json({ "message": "username, email and password is required." })
 
+    const foundUser = await User.findOne({ username });
+
+    if (foundUser) return res.status(400).json({ "message": `username already exist. Try another username.` })
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     const user = await User.create({
       username,
       email,
-      password,
-      createdAt: new Date()
+      password: hashedPassword,
+      createdAt: new Date(),
     });
 
     res.status(201).json(user);
