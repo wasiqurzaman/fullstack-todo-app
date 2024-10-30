@@ -1,8 +1,9 @@
 import Todo from "../models/todo.js";
+import User from "../models/user.js";
 
 const getAllTodos = async (req, res) => {
   try {
-    const todos = await Todo.find({});
+    const todos = await Todo.find({ userId: req.user._id });
     if (!todos) return res.status(400).json({ "message": "No todos found." });
     res.json(todos);
   } catch (err) {
@@ -13,9 +14,8 @@ const getAllTodos = async (req, res) => {
 const getTodo = async (req, res) => {
   try {
     const id = req.params?.id;
-    console.log(req.params);
     if (!id) return res.status(400).json({ "message": "id is required." });
-    const todo = await Todo.findOne({ _id: id }).exec();
+    const todo = await Todo.findOne({ _id: id, userId: req.user._id }).exec();
     if (!todo) {
       return res.status(400).json({ message: `No todo with id: ${id} is found.` })
     }
@@ -38,7 +38,8 @@ const createNewTodo = async (req, res) => {
       dueDate,
       priority,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      userId: req.user._id,
     });
 
     res.status(201).json(todo);
@@ -53,7 +54,7 @@ const updateTodo = async (req, res) => {
     const id = req.params?.id;
     const { title, description, status, dueDate, priority } = req.body;
     if (!id) return res.status(400).json({ "message": "id is required." });
-    const todo = await Todo.findOne({ _id: id }).exec();
+    const todo = await Todo.findOne({ _id: id, userId: req.user._id }).exec();
 
     if (!todo) return res.status(400).json({ "message": `Todo with id: ${id} not found.` });
 
@@ -65,7 +66,7 @@ const updateTodo = async (req, res) => {
     todo.updatedAt = new Date();
 
     const updatedTodo = await todo.save();
-    res.json(updateTodo);
+    res.json(updatedTodo);
   } catch (err) {
     console.log(err);
     res.status(500).json({ "message": `${err.message}` });
@@ -76,7 +77,7 @@ const deleteTodo = async (req, res) => {
   try {
     const id = req.params?.id;
     if (!id) return res.status(400).json({ "message": "id parameter is requires." })
-    const todo = await Todo.findOne({ _id: id }).exec();
+    const todo = await Todo.findOne({ _id: id, userId: req.user._id }).exec();
     if (!todo) return res.status(400).json({ "message": `Todo with id: ${id} not found.` });
 
     const deletedTodo = await todo.deleteOne({ _id: id });
@@ -86,6 +87,5 @@ const deleteTodo = async (req, res) => {
     res.status(500).json({ "message": `${err.message}` });
   }
 }
-
 
 export { getAllTodos, getTodo, createNewTodo, updateTodo, deleteTodo };

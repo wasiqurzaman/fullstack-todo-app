@@ -38,7 +38,7 @@ app.get("/api", (req, res) => {
 app.use("/api/auth", handleLogin);
 
 // user routes
-app.use("/api/users", verifyJWT, UserRoutes);
+app.use("/api/users", UserRoutes);
 // todo routes
 app.use("/api/todos", verifyJWT, TodoRoutes);
 

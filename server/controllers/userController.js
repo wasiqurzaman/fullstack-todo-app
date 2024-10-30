@@ -15,6 +15,7 @@ const getUser = async (req, res) => {
   try {
     const id = req.params?.id;
     if (!id) return res.status(400).json({ "message": "id is required." });
+    if (id !== req.user._id.toString()) return res.sendStatus(401);
     const user = await User.findOne({ _id: id }).exec();
     if (!user) {
       return res.status(400).json({ "message": `No user with id: ${id} is found.` })
@@ -58,11 +59,15 @@ const updateUser = async (req, res) => {
     const { password, email } = req.body;
     if (!password && !email) return res.status(400).json({ "message": "password or email required." });
 
-    const user = await User.findOne({ _id: id }).exec();
+    const user = await User.findOne({ _id: id, _id: req.user._id, username: req.user.username }).exec();
 
     if (!user) return res.status(400).json({ "message": `User with ${id} not found.` });
 
-    if (req.body?.password) user.password = req.body.password;
+    if (req.body?.password) {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      user.password = hashedPassword;
+    }
     if (req.body?.email) user.email = req.body.email;
 
     const updatedUser = await user.save();
@@ -77,7 +82,7 @@ const deleteUser = async (req, res) => {
   try {
     const id = req.params?.id;
     if (!id) return res.status(400).json({ "message": "id parameter is requires." })
-    const user = await User.findOne({ _id: id }).exec();
+    const user = await User.findOne({ _id: id, _id: req.user._id, username: req.user.username }).exec();
     if (!user) return res.status(400).json({ "message": `User with ${id} not found.` });
 
     const deletedUser = await user.deleteOne({ _id: id });
