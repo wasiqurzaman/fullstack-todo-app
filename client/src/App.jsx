@@ -1,11 +1,17 @@
-import TodoForm from "./components/TodoForm";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import Main from "./pages/Main";
 
 function App() {
   return (
-    <div>
-      <h1>TODO</h1>
-      <TodoForm />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
