@@ -7,7 +7,8 @@ import cookieParser from "cookie-parser";
 
 import UserRoutes from "./routes/user.js";
 import TodoRoutes from "./routes/todo.js";
-import handleLogin from "./controllers/authController.js";
+import AuthRoutes from "./routes/auth.js";
+
 import verifyJWT from "./middlewares/verifyJWT.js";
 import requestLogger from "./middlewares/logger.js";
 
@@ -38,7 +39,7 @@ app.get("/api", (req, res) => {
 
 
 // auth routes
-app.use("/api/auth", handleLogin);
+app.use("/api/auth", AuthRoutes);
 
 // user routes
 app.use("/api/users", UserRoutes);

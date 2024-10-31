@@ -16,7 +16,7 @@ const getUser = async (req, res) => {
     const id = req.params?.id;
     if (!id) return res.status(400).json({ "message": "id is required." });
     if (id !== req.user._id.toString()) return res.sendStatus(401);
-    const user = await User.findOne({ _id: id }).exec();
+    const user = await User.findOne({ _id: id }).populate("todos", { id: 1, title: 1, description: 1 }).exec();
     if (!user) {
       return res.status(400).json({ "message": `No user with id: ${id} is found.` })
     }
@@ -24,32 +24,6 @@ const getUser = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ "message": `${err.message}` })
-  }
-}
-
-const createNewUser = async (req, res) => {
-  try {
-    const { username, email, password } = req?.body;
-    if (!username || !email || !password) return res.status(400).json({ "message": "username, email and password is required." })
-
-    const foundUser = await User.findOne({ username });
-
-    if (foundUser) return res.status(400).json({ "message": `username already exist. Try another username.` })
-
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    const user = await User.create({
-      username,
-      email,
-      password: hashedPassword,
-      createdAt: new Date(),
-    });
-
-    res.status(201).json(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ "message": "Something went wrong. User can not be created.", "error": `${err.message}` })
   }
 }
 
@@ -95,4 +69,4 @@ const deleteUser = async (req, res) => {
 }
 
 
-export { getAllUser, getUser, createNewUser, updateUser, deleteUser };
+export { getAllUser, getUser, updateUser, deleteUser };

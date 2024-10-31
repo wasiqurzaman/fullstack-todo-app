@@ -1,16 +1,13 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 
-async function handleRefreshToken(req, res, next) {
-
+export async function handleRefreshToken(req, res) {
   const cookies = req.cookies;
-  console.log(cookies);
   if (!cookies?.jwt) return res.sendStatus(401);
-  console.log(cookies.jwt);
 
   const refreshToken = cookies.jwt;
 
-  const foundUser = await User.findOne({ refreshToken }).exec();
+  const foundUser = await User.findOne({ "refreshToken.token": refreshToken }).exec();
   if (!foundUser) return res.sendStatus(403); // forbidden
 
   // evaluate jwt
@@ -18,6 +15,6 @@ async function handleRefreshToken(req, res, next) {
     if (error || foundUser.username !== decoded.username) return res.sendStatus(403);
     const accessToken = jwt.sign({ username: foundUser.username, id: foundUser._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30m" });
 
-
+    res.json({ id: foundUser._id, accessToken });
   });
 }

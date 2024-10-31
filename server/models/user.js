@@ -27,7 +27,8 @@ const userSchema = new mongoose.Schema({
   todos: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Todo"
+      ref: "Todo",
+      required: true,
     }
   ],
   refreshToken: {
@@ -39,6 +40,16 @@ const userSchema = new mongoose.Schema({
       type: Date,
       default: Date.now,
     },
+  }
+});
+
+userSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+    delete returnedObject.password;
+    delete returnedObject.refreshToken;
   }
 });
 

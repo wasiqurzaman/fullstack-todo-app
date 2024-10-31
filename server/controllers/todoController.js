@@ -27,6 +27,7 @@ const getTodo = async (req, res) => {
 }
 
 const createNewTodo = async (req, res) => {
+
   try {
     const { title, description, status, dueDate, priority } = req.body;
     if (!title || !description || !priority || !dueDate) return res.status(400).json({ "message": "title, description, priority and dueDate are required." })
@@ -41,6 +42,10 @@ const createNewTodo = async (req, res) => {
       updatedAt: new Date(),
       userId: req.user._id,
     });
+
+    const user = req.user;
+    user.todos.push(todo._id);
+    await user.save();
 
     res.status(201).json(todo);
   } catch (err) {
@@ -81,6 +86,11 @@ const deleteTodo = async (req, res) => {
     if (!todo) return res.status(400).json({ "message": `Todo with id: ${id} not found.` });
 
     const deletedTodo = await todo.deleteOne({ _id: id });
+
+    const user = req.user;
+    user.todos = user.todos.filter(todo => todo._id.toStrin() !== deleteTodo._id.toString());
+    await user.save();
+
     res.json(deletedTodo);
   } catch (err) {
     console.log(err);
