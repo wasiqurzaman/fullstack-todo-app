@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3000/api/todos";
+const baseUrl = "http://localhost:3000/api/users";
 
 let token = null;
 
@@ -7,7 +7,7 @@ export const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
 }
 
-export const getAllTasks = async () => {
+export const getUserDetails = async () => {
   const config = {
     headers: { "Authorization": token }
   }
@@ -15,23 +15,15 @@ export const getAllTasks = async () => {
   return res.data;
 }
 
-export const createTask = async (newTask) => {
+export const updateUser = async (id, updatedUser) => {
   const config = {
     headers: { "Authorization": token }
   }
-  const res = await axios.post(baseUrl, newTask, config);
+  const res = await axios.put(`${baseUrl}/${id}`, updatedUser, config);
   return res.data;
 }
 
-export const updateTask = async (id, updatedTask) => {
-  const config = {
-    headers: { "Authorization": token }
-  }
-  const res = await axios.put(`${baseUrl}/${id}`, updatedTask, config);
-  return res.data;
-}
-
-export const deleteTask = async (id) => {
+export const deleteUser = async (id) => {
   const config = {
     headers: { "Authorization": token }
   }
