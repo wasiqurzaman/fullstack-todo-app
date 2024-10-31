@@ -1,3 +1,9 @@
+import Todos from "../components/Todos";
+
 export default function Main() {
-  return <div>Main</div>;
+  return (
+    <div>
+      <Todos />
+    </div>
+  );
 }
