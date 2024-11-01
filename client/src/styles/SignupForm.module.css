@@ -1,48 +1,83 @@
 .form {
   margin: auto;
   max-width: 50rem;
+  width: 50%;
   display: flex;
   border-radius: 5px;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   background-color: #ffffff;
-  padding: 2rem;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.07);
+  padding: 1rem;
+  /* box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.07); */
 }
 
 .h2 {
   font-size: 2.2rem;
   font-weight: 500;
+  /* margin-bottom: 1rem; */
+}
+
+.inputCont {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .label {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
+  color: #767676;
 }
 
 .input {
-  padding: 1rem 2rem;
-  border: 2px solid var(--very-dark-grayish-blue);
+  padding: 1.2rem 1.8rem;
+  border: 1.5px solid var(--light-grayish-blue);
   border-radius: 5px;
-  font-size: 1.6rem;
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .btn {
-  width: fit-content;
-  padding: 0.5rem 1rem;
-  border: 1px solid rgb(28, 28, 28);
-  background-color: #fff;
+  border: none;
+  margin-top: 1rem;
+  font-family: "Josefin Sans", sans-serif;
+  padding: 1.5rem 1rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  background-color: #ffe838;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background-color: #dfcd3f;
 }
 
 .error {
-  padding: 0.5rem 2rem;
-  font-size: 1.2rem;
-  background-color: #f6a4a47a;
-  color: rgb(255, 71, 71);
+  text-align: left;
+  padding: 0.2rem 0;
+  font-size: 1.4rem;
+  font-weight: 350;
+
+  /* background-color: #f9d4d47a; */
+  color: rgb(255, 8, 8);
 }
 
 .error::before {
   content: "*";
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+}
+
+.signinLink {
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+
+.signinLink span {
+  margin-left: 1rem;
+}
+
+.link {
+  text-decoration: none;
 }

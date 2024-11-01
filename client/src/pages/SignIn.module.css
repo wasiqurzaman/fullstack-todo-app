@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.card {
+  background-color: #000;
+  border-radius: 1.4rem;
+}
+
+.formContainer {
+  /* background-color: #6d5353; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import styles from "../styles/SignupForm.module.css";
+import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function SignupForm() {
   const {
@@ -14,28 +16,33 @@ export default function SignupForm() {
     },
   });
 
+  const { signup } = useAuth();
+
   function onSubmit(data) {
+    signup(data);
     console.log(data);
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <h2 className={styles.h2}>New user signup</h2>
-      <div className={styles.titleDiv}>
+      <div className={styles.inputCont}>
         <label className={styles.label} htmlFor="">
           username
         </label>
         <input
           className={`${styles.input} ${styles.title}`}
+          type="text"
+          placeholder="choose a username"
           {...register("username", {
             required: { value: true, message: "Username is required" },
             minLength: {
               value: 4,
-              message: "username must be atleast 4 characters long",
+              message: "Username must be atleast 4 characters long",
             },
             maxLength: {
               value: 20,
-              message: "username can not exceed 20 characters",
+              message: "Username can not exceed 20 characters",
             },
           })}
         />
@@ -43,13 +50,14 @@ export default function SignupForm() {
           <p className={styles.error}>{errors.username?.message}</p>
         )}
       </div>
-      <div className={styles.titleDiv}>
+      <div className={styles.inputCont}>
         <label className={styles.label} htmlFor="">
           email
         </label>
         <input
           className={`${styles.input} ${styles.title}`}
           type="email"
+          placeholder="enter an email"
           {...register("email", {
             required: { value: true, message: "Email is required" },
           })}
@@ -58,13 +66,14 @@ export default function SignupForm() {
           <p className={styles.error}>{errors.email?.message}</p>
         )}
       </div>
-      <div className={styles.titleDiv}>
+      <div className={styles.inputCont}>
         <label className={styles.label} htmlFor="">
           password
         </label>
         <input
           className={`${styles.input} ${styles.title}`}
           type="password"
+          placeholder="enter a password"
           {...register("password", {
             minLength: {
               value: 8,
@@ -85,6 +94,16 @@ export default function SignupForm() {
       <button className={styles.btn} type="submit">
         Sign up
       </button>
+      <div>
+        <p className={styles.signinLink}>
+          Already have an account?{" "}
+          <span>
+            <Link to="/signin" className={styles.link}>
+              Sign in
+            </Link>
+          </span>
+        </p>
+      </div>
     </form>
   );
 }
