@@ -11,30 +11,26 @@ export const getAllTasks = async () => {
   const config = {
     headers: { "Authorization": token }
   }
-  const res = await axios.get(baseUrl, config);
-  return res.data;
+  return await axios.get(baseUrl, config);
 }
 
 export const createTask = async (newTask) => {
   const config = {
     headers: { "Authorization": token }
   }
-  const res = await axios.post(baseUrl, newTask, config);
-  return res.data;
+  return await axios.post(baseUrl, newTask, config);
 }
 
 export const updateTask = async (id, updatedTask) => {
   const config = {
     headers: { "Authorization": token }
   }
-  const res = await axios.put(`${baseUrl}/${id}`, updatedTask, config);
-  return res.data;
+  return await axios.put(`${baseUrl}/${id}`, updatedTask, config);
 }
 
 export const deleteTask = async (id) => {
   const config = {
     headers: { "Authorization": token }
   }
-  const res = await axios.delete(`${baseUrl}/${id}`, config);
-  return res.data;
+  return await axios.delete(`${baseUrl}/${id}`, config);
 }
