@@ -8,7 +8,7 @@ const router = Router();
 router.post("/signup", validateUser, handleSignup);
 router.post("/signin", handleSignin);
 router.get("/signout", handleSignout);
-router.post("/refresh-token", handleRefreshToken);
+router.get("/refresh-token", handleRefreshToken);
 
 
 export default router;

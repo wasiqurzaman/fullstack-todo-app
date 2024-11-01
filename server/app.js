@@ -11,13 +11,15 @@ import AuthRoutes from "./routes/auth.js";
 
 import verifyJWT from "./middlewares/verifyJWT.js";
 import requestLogger from "./middlewares/logger.js";
-
+import corsOptions from "./configs/corsOptions.js";
+import path from "path";
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+
+app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser());
+app.use(express.json());
 
 app.use(requestLogger);
 

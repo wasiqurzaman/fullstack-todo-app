@@ -29,7 +29,7 @@ export async function handleSignin(req, res) {
     foundUser.refreshToken.createdAt = new Date();
     const saved = await foundUser.save();
 
-    res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: "None", secure: false, maxAge: 2 * 24 * 60 * 60 * 1000 });
+    res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: "Lax", secure: false, maxAge: 7 * 24 * 60 * 60 * 1000 });
     res.json({ id: foundUser._id, accessToken });
 
   } catch (err) {
@@ -70,7 +70,7 @@ export async function handleSignup(req, res) {
     user.refreshToken.createdAt = new Date();
     const saved = await user.save();
 
-    res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: "None", secure: false, maxAge: 2 * 24 * 60 * 60 * 1000 });
+    res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: "Lax", secure: false, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
     res.status(201).json({ user, accessToken });
   } catch (err) {
@@ -95,6 +95,6 @@ export async function handleSignout(req, res) {
   foundUser.refreshToken.token = "";
   foundUser.refreshToken.createdAt = new Date();
   await foundUser.save();
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: false });
+  res.clearCookie("jwt", { httpOnly: true, sameSite: "Lax", secure: false }); // in production { httpOnly: true, sameSite: "Strict", secure: true}
   res.sendStatus(204);
 }
