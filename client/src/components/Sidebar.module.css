@@ -1,0 +1,85 @@
+.sidebar {
+  background-color: #fff;
+  grid-column: 1/4;
+  padding: 2rem 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border-radius: 1.4rem;
+  font-size: 1.6rem;
+  color: #797979;
+  max-width: 40rem;
+}
+
+.sidebarItems {
+  /* font-size: 1.6rem; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sidebarNavs:hover {
+  background-color: #d6d6d6;
+}
+
+.sidebarNavs {
+  /* background-color: #eac8c8; */
+  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.navHeadingBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navHeading {
+  font-weight: 500;
+  color: #242424;
+}
+
+.menuBars {
+  /* margin-left: auto; */
+  cursor: pointer;
+  color: #797979;
+}
+
+.menuBars:hover {
+  color: #000;
+}
+
+.searchBox {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #dbdbdb;
+  border-radius: 5px;
+}
+
+.searchInput {
+  font-family: "Josefin Sans", sans-serif;
+  flex: 1;
+  display: block;
+  outline: none;
+  height: 100%;
+  border: none;
+  font-size: 1.6rem;
+}
+
+.listBox {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 2px;
+  background-color: #f54141;
+}
+
+.last {
+  margin-top: auto;
+}
