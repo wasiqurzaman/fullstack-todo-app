@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import styles from "../styles/SigninForm.module.css";
+import styles from "./SigninForm.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -20,9 +20,14 @@ export default function SignInForm() {
   const navigate = useNavigate();
 
   async function onSubmit(data) {
-    const res = await signin(data);
-    console.log(res);
-    navigate("/");
+    try {
+      const res = await signin(data);
+      console.log(res);
+      if (!res.ok) throw new Error("Failed to sign in");
+      navigate("/");
+    } catch (err) {
+      console.log("Failed to sign in", err);
+    }
   }
 
   return (

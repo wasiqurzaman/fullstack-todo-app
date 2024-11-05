@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import styles from "../styles/SignupForm.module.css";
+import styles from "./SignupForm.module.css";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
