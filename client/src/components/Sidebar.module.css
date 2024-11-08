@@ -1,8 +1,7 @@
 .sidebar {
   background-color: #fff;
-  grid-column: 1/4;
-  padding: 2rem 1.5rem;
-
+  padding: 1.5rem;
+  width: 30rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
