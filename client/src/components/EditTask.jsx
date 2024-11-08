@@ -1,13 +1,13 @@
 import TaskForm from "./TaskForm";
-import styles from "./AddTask.module.css";
-import { motion, AnimatePresence } from "framer-motion";
+import styles from "./EditTask.module.css";
 import useTodo from "../contexts/TodoContext";
+import { AnimatePresence, motion } from "framer-motion";
 
-export default function AddTasks() {
-  const { isAdding, setIsAdding } = useTodo();
+export default function EditTasks() {
+  const { currentTask, isEditing, setIsEditing } = useTodo();
   return (
     <AnimatePresence>
-      {isAdding && (
+      {isEditing && (
         <>
           <motion.div
             initial={{
@@ -47,7 +47,7 @@ export default function AddTasks() {
             }}
             className={styles.addTask}
           >
-            <TaskForm mode="create" />
+            <TaskForm mode="edit" task={currentTask} />
           </motion.div>
         </>
       )}
