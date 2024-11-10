@@ -5,20 +5,28 @@ import { useEffect } from "react";
 import styles from "./SignIn.module.css";
 
 export default function SignIn() {
-  const { user, accessToken } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user || accessToken) {
-      navigate("/");
+    if (isAuthenticated) {
+      navigate("/tasks");
     }
-  }, [user, accessToken, navigate]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className={styles.container}>
-      <div className={styles.card}></div>
-      <div className={styles.formContainer}>
-        <SignInForm />
+      <div className={styles.wrapper}>
+        <div className={styles.card}>
+          <img
+            src="images/Login-pana.png"
+            alt="sign in illustration"
+            className={styles.image}
+          />
+        </div>
+        <div className={styles.formContainer}>
+          <SignInForm />
+        </div>
       </div>
     </div>
   );

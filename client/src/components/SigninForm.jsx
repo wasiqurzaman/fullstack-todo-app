@@ -23,10 +23,12 @@ export default function SignInForm() {
     try {
       const res = await signin(data);
       console.log(res);
-      if (!res.ok) throw new Error("Failed to sign in");
-      navigate("/");
+      if (!res.response) throw new Error("Failed to sign in");
+      if (register.response.status === 401) throw new Error(res);
+      navigate("/tasks");
     } catch (err) {
       console.log("Failed to sign in", err);
+      console.log(err);
     }
   }
 

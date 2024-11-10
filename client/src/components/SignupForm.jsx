@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import styles from "./SignupForm.module.css";
 import { useAuth } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,8 +19,10 @@ export default function SignupForm() {
 
   const { signup } = useAuth();
 
-  function onSubmit(data) {
-    signup(data);
+  async function onSubmit(data) {
+    const res = await signup(data);
+    if (!res.ok) throw new Error("Failed to sign in");
+    navigate("/tasks");
     console.log(data);
   }
 

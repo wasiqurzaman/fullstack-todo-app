@@ -6,20 +6,28 @@ import { useEffect } from "react";
 import styles from "./SignUp.module.css";
 
 export default function SignUp() {
-  const { user, accessToken } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user || accessToken) {
-      navigate("/");
+    if (isAuthenticated) {
+      navigate("/tasks");
     }
-  }, [user, accessToken, navigate]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className={styles.container}>
-      <div className={styles.card}></div>
-      <div className={styles.formContainer}>
-        <SignForm />
+      <div className={styles.wrapper}>
+        <div className={styles.card}>
+          <img
+            src="images/Sign-up-bro.png"
+            alt="sign up illustration"
+            className={styles.image}
+          />
+        </div>
+        <div className={styles.formContainer}>
+          <SignForm />
+        </div>
       </div>
     </div>
   );
