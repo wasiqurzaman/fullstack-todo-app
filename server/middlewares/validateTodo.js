@@ -7,7 +7,7 @@ const zodTodoSchema = z.object({
   description: z.string({ required_error: "description is required." })
     .min(5, { message: "descripton must be at least 5 character long" })
     .max(250, { message: "description can not exceed 250 characters" }),
-  status: z.enum(["pending", "in-progress", "complete"]),
+  // status: z.enum(["pending", "in-progress", "complete"]),
   priority: z.enum(["low", "medium", "high", "urgent"]),
   dueDate: z.string().datetime()
 });

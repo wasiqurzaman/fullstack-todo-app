@@ -82,13 +82,15 @@ const deleteTodo = async (req, res) => {
   try {
     const id = req.params?.id;
     if (!id) return res.status(400).json({ "message": "id parameter is requires." })
-    const todo = await Todo.findOne({ _id: id, userId: req.user._id }).exec();
-    if (!todo) return res.status(400).json({ "message": `Todo with id: ${id} not found.` });
+    const foundTodo = await Todo.findOne({ _id: id, userId: req.user._id }).exec();
+    if (!foundTodo) return res.status(400).json({ "message": `Todo with id: ${id} not found.` });
 
-    const deletedTodo = await todo.deleteOne({ _id: id });
+    const deletedTodo = await foundTodo.deleteOne({ _id: id });
+
+    // console.log("deleted todo: ", deletedTodo);
 
     const user = req.user;
-    user.todos = user.todos.filter(todo => todo._id.toStrin() !== deleteTodo._id.toString());
+    user.todos = user.todos.filter(todo => todo._id.toString() !== foundTodo._id.toString());
     await user.save();
 
     res.json(deletedTodo);
